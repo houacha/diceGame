@@ -52,9 +52,10 @@ function hasEnoughMoneyGun(gunCost){
 		alert("Obviously, you lack the basic skills for everyday life, so just let me tell you that you don`t have enough money for that. I`m not even sure why you thought that was a good idea.");
 		annoyed();
 		gunChoose();
+	}else{
+		player.cash = holder;
+		holder = 0
 	}
-	player.cash = holder;
-	holder = 0
 }
 
 function amountOfBullets(){
@@ -70,9 +71,10 @@ function moneyForBullets(bulletCost,amount){
 		alert("I know this requires math, but buddy let me tell you; you`re the WORST PERSON EVER!!! STOP spending more than you have.");
 		annoyed();
 		bulletChoose();
+	}else{
+		player.cash = holder;
+		holder = 0
 	}
-	player.cash = holder;
-	holder = 0
 }
 
 function bulletChoose(){
@@ -80,23 +82,18 @@ function bulletChoose(){
 	let bulletChoice = prompt("These are obviously the ammos for the guns: "+"[1]"+ammo1.name+" $"+ammo1.price+": [2]"+ammo2.name+" $"+ammo2.price+": [3]"+ammo3.name+" $"+ammo3.price+": [4]"+ammo4.name+" $"+ammo4.price);
 	if (bulletChoice == 1||bulletChoice == ammoArray[0].name){
 		moneyForBullets(ammo1.price,amountOfBullets());
-	}
-	else if (bulletChoice == 2||bulletChoice == ammoArray[1].name){
+	}else if (bulletChoice == 2||bulletChoice == ammoArray[1].name){
 		moneyForBullets(ammo2.price,amountOfBullets());
-	}
-	else if (bulletChoice == 3||bulletChoice == ammoArray[2].name){
+	}else if (bulletChoice == 3||bulletChoice == ammoArray[2].name){
 		moneyForBullets(ammo3.price,amountOfBullets());
-	}
-	else if (bulletChoice == 4||bulletChoice == ammoArray[3].name){		
+	}else if (bulletChoice == 4||bulletChoice == ammoArray[3].name){		
 		if (player.gun !== gun2.name){
 			alert("This ammo can only be used with its respective gun.")
 			bulletChoose();
-		}
-		else{
+		}else{
 			moneyForBullets(ammo4.price,amountOfBullets());
 		}
-	}
-	else {
+	}else {
 		annoyed();
 		alert("I see you have never played a game before so let me help you out. Type either the name or the number you want into the input box, ok.")
 		bulletChoose();
@@ -110,21 +107,16 @@ function gunChoose(){
 	let gunChoice = prompt('"This what I got. Take it or leave it" He shows you four guns:'+": [1]"+gunArray[0].name+" "+"$"+gunArray[0].price+": [2]"+gunArray[1].name+" "+"$"+gunArray[1].price+": [3]"+gunArray[2].name+" "+"$"+gunArray[2].price+": [4]"+gunArray[3].name+" "+"$"+gunArray[3].price);
 	if(gunChoice == 1||gunChoice == gunArray[0].name||gunChoice == "standard rifle"){
 		hasEnoughMoneyGun(gun1.price);	
-	}
-	else if(gunChoice == 2||gunChoice == gunArray[1].name||gunChoice == "elephant gun"){
+	}else if(gunChoice == 2||gunChoice == gunArray[1].name||gunChoice == "elephant gun"){
 		hasEnoughMoneyGun(gun2.price);
-	}
-	else if(gunChoice == 3||gunChoice == gunArray[2].name||gunChoice == "rugar hawkeye"){
+	}else if(gunChoice == 3||gunChoice == gunArray[2].name||gunChoice == "rugar hawkeye"){
 		hasEnoughMoneyGun(gun3.price);
-	}
-	else if(gunChoice == 4||gunChoice == gunArray[3].name||gunChoice == "wnichester magnum"){
+	}else if(gunChoice == 4||gunChoice == gunArray[3].name||gunChoice == "wnichester magnum"){
 		hasEnoughMoneyGun(gun4.price);
-	}
-	else if(gunChoice=="fuck you"){
+	}else if(gunChoice=="fuck you"){
 		alert("Fuck you right back dickwad. Now choose a fucking gun.");
 		gunChoose();
-	}
-	else {
+	}else {
 		annoyed();
 		alert('Well we can`t be all born with a brain. Choose something that is available genius.');
 		gunChoose();
@@ -135,8 +127,7 @@ function gunChoose(){
 function checkResponse(userInput,type){
 	if (userInput=="1"||userInput=="2"||userInput=="3"||userInput=="4"){
 		return type[userInput-1];
-	}
-	else{
+	}else{
 		return userInput;
 	}
 }
@@ -144,17 +135,36 @@ function checkResponse(userInput,type){
 function locationChoice(){
 	if (player.ammo>=13){
 		locationchoose = prompt("With your gun purchased and your pockets full of ammo, you take on the challenge of your lifetime. You take your charter plane to Africa and stay one night in a native village. Because of your arrogance and dim-wittedness, the locals took pity on you and told you the five best hunting spots. Even with your poor recollection skills, you somehow manage to recall the locations to be: Namibia, South Africa, Uganda, Zimbabwe, and Tanzania. Eagarly, you speed off to....");
-	}
-	else if (player.ammo<13&&player.ammo>=6){
+		if(locationchoose==""||locationchoose==null){
+			annoyed();
+			alert("*sign* I feel like this shouldn`t be this difficult. All you have to do is 'type' in where you want to go from the selected list. Let`s try this again.");
+			locationChoice();
+		}else{
+			arrival();
+		}
+	}else if (player.ammo<13&&player.ammo>=6){
 		locationchoose = prompt("Being poor now has given more appreciation for money so you decided to save a little. You take your plane to Africa and experience a little bit of the culture. While looking around you overhear that the best places to hunt are: Namibia, South Africa, Uganda, Zimbabwe, and Tanzania. Thus, you decide to go to....");
-	}
-	else {
+		if(locationchoose==""||locationchoose==null){
+			annoyed();
+			alert("*sign* I feel like this shouldn`t be this difficult. All you have to do is 'type' in where you want to go from the selected list. Let`s try this again.");
+			locationChoice();
+		}else{
+			arrival();
+		}
+	}else {
 		locationchoose = prompt("You decided that it was best to gong-ho this adventure and only take "+player.ammo+" amount of ammos. As if you life wasn`t difficult enough, you thought it best to increase those odds. You travel to your destination and ask around for the best hunt locations are. Because you are so dense you don`t notice the intense disdain for you and were confused to why no one was really helping you. You eventually make you way to a group of people who you could only discern as fellow hunters from their bundle of ivory and rare animal hides; not to mention the many array of guns they were caring. You asked them for where they got all those 'trophies' and they hesitantly answer: Namibia, South Africa, Uganda, Zimbabwe, and Tanzania. You thought it smart to take a look in .....")
+		if(locationchoose==""||locationchoose==null){
+			annoyed();
+			alert("*sign* I feel like this shouldn`t be this difficult. All you have to do is 'type' in where you want to go from the selected list. Let`s try this again.");
+			locationChoice();
+		}else{
+			arrival();
+		}
 	}
 }
 
 function arrival(){
-	let arrivalRoll = diceRoll(0)
+	let arrivalRoll = diceRoll(3)
 	switch(arrivalRoll){
 		case 0:
 			alert("You were lucky enough to hitchhike your way to "+locationchoose);
@@ -174,22 +184,17 @@ function arrival(){
 function setUpLocation(){
 	if (locationchoose.toLowerCase()=="namibia"){
 		namibia();
-	}
-	else if (locationchoose.toLowerCase()=="zimbabwe"){
+	}else if (locationchoose.toLowerCase()=="zimbabwe"){
 		zimbabwe();
-	}
-	else if (locationchoose.toLowerCase()=="uganda"){
+	}else if (locationchoose.toLowerCase()=="uganda"){
 		uganda();
-	}
-	else if (locationchoose.toLowerCase()=="tanzania"){
+	}else if (locationchoose.toLowerCase()=="tanzania"){
 		tanzania();
-	}
-	else if (locationchoose.toLowerCase()=="south africa"){
+	}else if (locationchoose.toLowerCase()=="south africa"){
 		southAfrica();
-	}	
-	else {
+	}else {
 		annoyed();
-		alert("*sign* I feel like this shouldn`t be this difficult. All you have to do is 'type' in where you want to go from the selected list. Let`s try this again.");
+		alert("Goddamnit, I am sick and tired of you trying to break this game. You are pushing my buttons buddy.");
 		locationChoice();
 	}
 }
@@ -203,20 +208,17 @@ function mainHuntCycle(){
 			let retry = prompt("I don`t even know why im asking this but would you like to play again from the beginning?");
 			if (retry.toLowerCase()=="yes"){
 				masterFunction();
-			}
-			else {
+			}else {
 				alert("Can`t say I didn`t see that coming. Well let`s hope your real life actually goes FAR better than this virtual one.")
 				window.open('','_parent',''); 
     			window.close();
 			}
-		}
-		else{
+		}else{
 			hours = hours - 1;
 			setUpLocation();
-			player.score.push(hunt());
+			hunt()
 		}
 	}
-	
 }
 
 function probabilityRange(initial,final){
@@ -242,8 +244,8 @@ function setMultiplier(multipyArray){
 function encounter(rngNumber){
 	if (rngNumber == 100){
 		return '"Nothing here. Guess I better look elsewhere."';
-	}
-	else {
+		setUpLocation();
+	}else {
 		let arrayOfAnimalsIndex = 0;
 		while (!(arrayOfAnimals[arrayOfAnimalsIndex].probability.includes(rngNumber))){
 			arrayOfAnimalsIndex++;
@@ -256,51 +258,46 @@ function encounter(rngNumber){
 				animalEncounter = "a strangely familiar Lion. "
 				alert('You notice a perculiar looking lion wandering the distance. With your eagle-like vision, you make out what looks to be a distinctive scar across his left eye. "What '+animalEncounter+'I could`ve sworn I`ve seen this animal before."');
 			}
-			else{
-			}
 		}
 		animalHealth = arrayOfAnimals[animalsIndex].health;
 		arrayOfAnimals[animalsIndex].distance = (diceRoll(10)*10);
-		alert(randomStory() + animalEncounter+" "+arrayOfAnimals[animalsIndex].distance+"meters away.");
+		alert(randomStory() + animalEncounter+" "+arrayOfAnimals[animalsIndex].distance+" meters away.");
 	}
 }
 
 function hunt(){
-	
 	let answer = prompt("Would you like to engage or search for a better game?");
 	if (answer.toLowerCase = "engage"){
 		while(player.health>0&&animalHealth>0){
 			if (player.ammo<=0){
 				let end=prompt("WHELP! Looks like you ran out of bullets. You can either let yourself die or go home.");
 				if (end=="go home"){
+					player.health = 0;
 					let ask = prompt("Would you like to try again?")
 					if (ask == "yes"){
 						masterFunction();
+					}else{
+						window.open('','_parent',''); 
+    					window.close();
 					}
-					else{}
-				}
-				else{
+				}else{
 					window.open('','_parent',''); 
     				window.close();
 				}
-			}
-			else{
+			}else{
 				hit(dodge(player.gun.accuracy,arrayOfAnimals[animalsIndex].dodge,arrayOfAnimals[animalsIndex].distance,player.ammotype.accuracy));
 				player.ammo - 1;
 				if (animalHealth<arrayOfAnimals[animalsIndex].health){
 					alert("Your excellent shooting has wounded "+arrayOfAnimals[animalsIndex].name+", even though you have never shot a gun in your life.")
-				}
-				else{
+				}else{
 					alert("Well you missed. You can`t win them all champ.")
 				}
 				animalHit(arrayOfAnimals[animalsIndex].distance);
 			}
 		}
-	}
-	else if (answer.toLowerCase=="search"||answer.toLowerCase=="search for a better game"){
+	}else if (answer.toLowerCase=="search"||answer.toLowerCase=="search for a better game"){
 		alert("Definitely up to you. Whether it was a good decision or not is the real question?");
-	}
-	else {
+	}else {
 		annoyed();
 		alert("It seems like you don`t know how to read. That`s something that I can`t help with; but I promise if this keeps happening, I'll be the last one laughing.");
 	}
@@ -329,25 +326,20 @@ function dodge(gunAcc,animalDodge,distance,bulletAcc){
 	let reducer = [.2,.3,.4,.5,.7,.9,0,15,20,30,35];
 	if (distance<0){
 		distance = 0;
-	}
-	else{
+	}else{
 		if (distance<60){
 			for (m=0; m<=5; m++){
 				if (distance<=(m*10)){
 					return dodges * reducer[m];
-				}
-				else{}
+				}else{}
 			}
-		}
-		else if (distance>=60){
+		}else if (distance>=60){
 			for (n=6; n<reducer.length; n++){
 				if (distance==(n*10)){
 					return dodges + reducer[n];
-				}
-				else{}
+				}else{}
 			}
-		}
-		else{
+		}else{
 			return dodges;
 		}
 	}
@@ -358,40 +350,32 @@ function animalHit(distance){
 	if (range<=70&&arrayOfAnimals[animalsIndex].health>0&&(arrayOfAnimals[animalsIndex].name=="elephant"||arrayOfAnimals[animalsIndex].name=="leopard")){
 		if(range<=0){
 			player.health-=arrayOfAnimals[animalsIndex].damage;
-		}
-		else{
+		}else{
 			range-=arrayOfAnimals[animalsIndex].speed
 			alert("The "+arrayOfAnimals[animalsIndex].name+"is closing in and is now "+range+"meters away. Good luck.");
 		}
-	}
-	else if(range<=20&&(arrayOfAnimals[animalsIndex].name=="zebra"||arrayOfAnimals[animalsIndex].name=="gorilla")){
+	}else if(range<=20&&(arrayOfAnimals[animalsIndex].name=="zebra"||arrayOfAnimals[animalsIndex].name=="gorilla")){
 		if(range<=0){
 			player.health-=arrayOfAnimals[animalsIndex].damage;
-		}
-		else{
+		}else{
 			range-=arrayOfAnimals[animalsIndex].speed
 			alert("The "+arrayOfAnimals[animalsIndex].name+"is closing in and is now "+range+"meters away. Good luck.");
 		}
-	}
-	else if(range>=70&&(arrayOfAnimals[animalsIndex].name=="lion"||arrayOfAnimals[animalsIndex].name=="black rhino"||arrayOfAnimals[animalsIndex].name=="african wild dog"||arrayOfAnimals[animalsIndex].name=="lioness")){
+	}else if(range>=70&&(arrayOfAnimals[animalsIndex].name=="lion"||arrayOfAnimals[animalsIndex].name=="black rhino"||arrayOfAnimals[animalsIndex].name=="african wild dog"||arrayOfAnimals[animalsIndex].name=="lioness")){
 		if(range<=0){
 			player.health-=arrayOfAnimals[animalsIndex].damage;
-		}
-		else{
+		}else{
 			range-=arrayOfAnimals[animalsIndex].speed
 			alert("The "+arrayOfAnimals[animalsIndex].name+"is closing in and is now "+range+"meters away. Good luck.");
 		}
-	}
-	else if(range<=70&&(animalHealth<arrayOfAnimals[animalsIndex].health)&&(arrayOfAnimals[animalsIndex].name=="buffalo"||arrayOfAnimals[animalsIndex].name=="wilderbeest")){
+	}else if(range<=70&&(animalHealth<arrayOfAnimals[animalsIndex].health)&&(arrayOfAnimals[animalsIndex].name=="buffalo"||arrayOfAnimals[animalsIndex].name=="wilderbeest")){
 		if(range<=0){
 			player.health-=arrayOfAnimals[animalsIndex].damage;
-		}
-		else{
+		}else{
 			range-=arrayOfAnimals[animalsIndex].speed
 			alert("The "+arrayOfAnimals[animalsIndex].name+"is closing in and is now "+range+"meters away. Good luck.");
 		}	
-	}
-	else if(arrayOfAnimals[animalsIndex].name=="cheetah"){
+	}else if(arrayOfAnimals[animalsIndex].name=="cheetah"){
 		player.health-=arrayOfAnimals[animalsIndex].damage;
 	}
 }
@@ -400,8 +384,7 @@ function hit(finalDodgeChance){
 	let hitChance = diceRoll(100)
 	if (hitChance>=finalDodgeChance){
 		animalHealth -= playerDmg()
-	}
-	else {}
+	}else {}
 }
 
 function playerDmg(){
@@ -451,7 +434,6 @@ function masterFunction(){
 	alert("Welcome to your own private safari adventure! With you vast wealth, that wasn`t in anyway thanks to you *cough* you`re a spoiled rich kid *cough*, you decided to squander it all on an exclusive, until-you-die safari hunt. Since you`re such a badass, you decided that you don`t need to be bother with any help for this hunt i.e. no map, guide, people who would`ve told you that spending almost all your money on an exclusive safari is probably the dumbest idea since the carsforkids foundation (yes this is a real foundation). Your first destination, and truthfully the only smart thing you have done since this spontaneously frivalous decision, was to go to the gun store.");
 	gunStore();
 	locationChoice();
-	arrival();
 	mainHuntCycle();
 }
 masterFunction();
